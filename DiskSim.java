@@ -16,7 +16,7 @@ public class DiskSim {
    static eDirection direction = eDirection.LEFT;
    public static ArrayList<Integer> positions = new ArrayList<Integer>();
    public static final int MIN_POSITION = 0;
-   public static final int MAX_POSITION = 199;
+   public static final int MAX_POSITION = 4999;
    
    
    public static void main(String[] args) throws FileNotFoundException {
