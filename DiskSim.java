@@ -16,7 +16,7 @@ public class DiskSim {
    static eDirection direction = eDirection.LEFT;
    public static ArrayList<Integer> positions = new ArrayList<Integer>();
    public static final int MIN_POSITION = 0;
-   public static final int MAX_POSITION = 4999;
+   public static final int MAX_POSITION = 199;
    
    
    public static void main(String[] args) throws FileNotFoundException {
@@ -30,7 +30,7 @@ public class DiskSim {
          }
       }
       else {
-         Scanner scanner = new Scanner(new File(args[0]));
+         Scanner scanner = new Scanner(new File(args[1]));
          
          while(scanner.hasNextInt()) {
             positions.add(new Integer(scanner.nextInt()));
@@ -70,7 +70,7 @@ public class DiskSim {
          return;
       }
       
-      Integer lastNodeRemoved = positionsCopy.remove(0);
+      Integer lastNodeRemoved = startPosition;
       ArrayList<Integer> positionsWithTheLastOneRemoved = new ArrayList<Integer>(positionsCopy);
       
       int distanceTraveled = 0;
@@ -160,10 +160,10 @@ public class DiskSim {
          distanceTraveled = startPosition - positionsCopy.get(0);
       }
       else if(direction == eDirection.LEFT) {
-         distanceTraveled = MAX_POSITION - (positionsCopy.get(index + 1) - startPosition);
+         distanceTraveled = MAX_POSITION - (positionsCopy.get(index + 1) - startPosition) + MAX_POSITION;
       }
       else if(direction == eDirection.RIGHT) {
-         distanceTraveled = MAX_POSITION - (positionsCopy.get(index - 1) - startPosition);
+         distanceTraveled = MAX_POSITION - (positionsCopy.get(index - 1) - startPosition) + MAX_POSITION;
       }
       else {
          System.out.println("MISSED A CASE REMOVE BE SUBMIT");
@@ -181,9 +181,9 @@ public class DiskSim {
       int distanceTraveled = 0;   
       positionsCopy.add(startPosition);
       
-      int index = positionsCopy.indexOf(startPosition);
       
       Collections.sort(positionsCopy);
+      int index = positionsCopy.indexOf(startPosition);
       
       if(index == 0 || index == positionsCopy.size() - 1) {
          distanceTraveled = positionsCopy.get(positions.size() - 1) - positionsCopy.get(0); 
@@ -211,18 +211,19 @@ public class DiskSim {
       int distanceTraveled = 0;   
       positions.add(startPosition);
       
-      int index = positions.indexOf(startPosition);
-      
       Collections.sort(positions);
+      int index = positions.indexOf(startPosition);
       
       if(index == 0 || index == positions.size() - 1) {
          distanceTraveled = positions.get(positions.size() - 1) - positions.get(0); 
       }
       else if(direction == eDirection.RIGHT) {
-         distanceTraveled = 2 * (positions.get(positions.size() - 1) - startPosition) + startPosition - positions.get(0);
+         distanceTraveled = (positions.get(positions.size() - 1) - positions.get(0)) + (startPosition - positions.get(0))
+               + (positions.get(index - 1) - positions.get(0));
       }
       else if(direction == eDirection.LEFT){
-         distanceTraveled = (positions.get(positions.size() - 1) - startPosition) + 2 * (startPosition - positions.get(0));
+         distanceTraveled = (positions.get(positions.size() - 1) - positions.get(0)) + (startPosition - positions.get(0))
+                            + (positions.get(positions.size() - 1) - positions.get(index + 1));
       }
       else {
          System.out.println("ERROR MISSED A CASE REMOVE BEFORE TURN IN");
