@@ -5,9 +5,7 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
-import javax.crypto.spec.PSource;
-
-
+// beautiful
 public class DiskSim {
    
    public enum eDirection {LEFT, RIGHT};
@@ -160,10 +158,10 @@ public class DiskSim {
          distanceTraveled = startPosition - positionsCopy.get(0);
       }
       else if(direction == eDirection.LEFT) {
-         distanceTraveled = MAX_POSITION - (positionsCopy.get(index + 1) - startPosition) + MAX_POSITION;
+    	  distanceTraveled = startPosition + MAX_POSITION + MAX_POSITION - positionsCopy.get(index-1);
       }
       else if(direction == eDirection.RIGHT) {
-         distanceTraveled = MAX_POSITION - (positionsCopy.get(index - 1) - startPosition) + MAX_POSITION;
+         distanceTraveled = MAX_POSITION - startPosition + MAX_POSITION + positionsCopy.get(index-1);
       }
       else {
          System.out.println("MISSED A CASE REMOVE BE SUBMIT");
@@ -208,22 +206,26 @@ public class DiskSim {
          return;
       }
       
+      ArrayList<Integer> positionsCopy = new ArrayList<Integer>(positions);
       int distanceTraveled = 0;   
-      positions.add(startPosition);
+      positionsCopy.add(startPosition);
       
-      Collections.sort(positions);
-      int index = positions.indexOf(startPosition);
       
-      if(index == 0 || index == positions.size() - 1) {
-         distanceTraveled = positions.get(positions.size() - 1) - positions.get(0); 
+      Collections.sort(positionsCopy);
+      int index = positionsCopy.indexOf(startPosition);
+      
+      if(index == 0 || index == positionsCopy.size() - 1) {
+         distanceTraveled = positionsCopy.get(positionsCopy.size() - 1) - positionsCopy.get(0); 
       }
       else if(direction == eDirection.RIGHT) {
-         distanceTraveled = (positions.get(positions.size() - 1) - positions.get(0)) + (startPosition - positions.get(0))
-               + (positions.get(index - 1) - positions.get(0));
+         distanceTraveled = positionsCopy.get(positionsCopy.size() - 1) - startPosition
+        		 			+ positionsCopy.get(positionsCopy.size() - 1) - positionsCopy.get(0)
+        		 			+ positionsCopy.get(index - 1) - positionsCopy.get(0);
       }
       else if(direction == eDirection.LEFT){
-         distanceTraveled = (positions.get(positions.size() - 1) - positions.get(0)) + (startPosition - positions.get(0))
-                            + (positions.get(positions.size() - 1) - positions.get(index + 1));
+         distanceTraveled = startPosition - positionsCopy.get(0)
+        		 			+ positionsCopy.get(positionsCopy.size() - 1) - positionsCopy.get(0)
+        		 			+ positionsCopy.get(positionsCopy.size() - 1) - positionsCopy.get(index + 1);
       }
       else {
          System.out.println("ERROR MISSED A CASE REMOVE BEFORE TURN IN");
