@@ -15,7 +15,7 @@ public class DiskSim {
    static eDirection direction = eDirection.LEFT;
    public static ArrayList<Integer> positions = new ArrayList<Integer>();
    public static final int MIN_POSITION = 0;
-   public static final int MAX_POSITION = 10;
+   public static final int MAX_POSITION = 4999;
    
    
    public static void main(String[] args) throws FileNotFoundException {
@@ -142,7 +142,7 @@ public class DiskSim {
    
    public static void CSCAN() {
       if(positions.isEmpty()) {
-         System.out.println("CSCAN 0");
+         System.out.println("C-SCAN 0");
          return;
       }
       ArrayList<Integer> positionsCopy = new ArrayList<Integer>(positions);
@@ -175,7 +175,7 @@ public class DiskSim {
       else {
          System.out.println("MISSED A CASE REMOVE BE SUBMIT");
       }
-      System.out.println("CSCAN " + distanceTraveled);
+      System.out.println("C-SCAN" + distanceTraveled);
       
    }
    
@@ -211,7 +211,7 @@ public class DiskSim {
    
    public static void CLOOK() {
       if(positions.isEmpty()) {
-         System.out.println("CLOOK 0");
+         System.out.println("C-LOOK 0");
          return;
       }
       
@@ -246,7 +246,7 @@ public class DiskSim {
          System.out.println("ERROR MISSED A CASE REMOVE BEFORE TURN IN");
       }
       
-      System.out.println("CLOOK " + distanceTraveled);
+      System.out.println("C-LOOK " + distanceTraveled);
       
    }
    
