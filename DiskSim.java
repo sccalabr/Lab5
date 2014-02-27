@@ -2,10 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
-// beautiful
+//the real beautiful one
 public class DiskSim {
    
    public enum eDirection {LEFT, RIGHT};
@@ -14,7 +15,7 @@ public class DiskSim {
    static eDirection direction = eDirection.LEFT;
    public static ArrayList<Integer> positions = new ArrayList<Integer>();
    public static final int MIN_POSITION = 0;
-   public static final int MAX_POSITION = 4999;
+   public static final int MAX_POSITION = 10;
    
    
    public static void main(String[] args) throws FileNotFoundException {
@@ -23,9 +24,11 @@ public class DiskSim {
       Random random = new Random();
       
       if(args.length ==1) {
+    	 HashSet<Integer> temp = new HashSet<Integer>();
          for(int counter = 0; counter < 100; counter++) {
-            positions.add(random.nextInt(4999) + 1);
+            temp.add(random.nextInt(4999) + 1);
          }
+         positions.addAll(temp);
       }
       else {
          Scanner scanner = new Scanner(new File(args[1]));
@@ -154,11 +157,17 @@ public class DiskSim {
       if(index == 0 && direction == eDirection.RIGHT) {
          distanceTraveled = positionsCopy.get(positionsCopy.size() - 1) - startPosition;
       }
+      else if (index == 0 && direction == eDirection.LEFT) {
+    	 distanceTraveled = startPosition + MAX_POSITION + MAX_POSITION - positionsCopy.get(index + 1);
+      }
       else if(index == positionsCopy.size() - 1 && direction == eDirection.LEFT) {
          distanceTraveled = startPosition - positionsCopy.get(0);
       }
+      else if (index == positionsCopy.size() - 1 && direction == eDirection.RIGHT) {
+    	  distanceTraveled = MAX_POSITION - startPosition + MAX_POSITION + positionsCopy.get(index-1);
+      }
       else if(direction == eDirection.LEFT) {
-    	  distanceTraveled = startPosition + MAX_POSITION + MAX_POSITION - positionsCopy.get(index-1);
+    	  distanceTraveled = startPosition + MAX_POSITION + MAX_POSITION - positionsCopy.get(index+1);
       }
       else if(direction == eDirection.RIGHT) {
          distanceTraveled = MAX_POSITION - startPosition + MAX_POSITION + positionsCopy.get(index-1);
@@ -184,7 +193,7 @@ public class DiskSim {
       int index = positionsCopy.indexOf(startPosition);
       
       if(index == 0 || index == positionsCopy.size() - 1) {
-         distanceTraveled = positionsCopy.get(positions.size() - 1) - positionsCopy.get(0); 
+         distanceTraveled = positionsCopy.get(positionsCopy.size() - 1) - positionsCopy.get(0); 
       }
       else if(direction == eDirection.RIGHT) {
          distanceTraveled = 2 * (positionsCopy.get(positionsCopy.size() - 1) - startPosition) + startPosition - positionsCopy.get(0);
@@ -215,7 +224,13 @@ public class DiskSim {
       int index = positionsCopy.indexOf(startPosition);
       
       if(index == 0 || index == positionsCopy.size() - 1) {
-         distanceTraveled = positionsCopy.get(positionsCopy.size() - 1) - positionsCopy.get(0); 
+         if (index == 0 && direction == eDirection.RIGHT
+        	 || index == positionsCopy.size() - 1 && direction == eDirection.LEFT) {
+        	 distanceTraveled = positionsCopy.get(positionsCopy.size() - 1) - positionsCopy.get(0);        	 
+         } else {
+        	 distanceTraveled = positionsCopy.get(positionsCopy.size() - 1) - positionsCopy.get(0);
+        	 distanceTraveled *= 2;
+         }
       }
       else if(direction == eDirection.RIGHT) {
          distanceTraveled = positionsCopy.get(positionsCopy.size() - 1) - startPosition
