@@ -175,7 +175,7 @@ public class DiskSim {
       else {
          System.out.println("MISSED A CASE REMOVE BE SUBMIT");
       }
-      System.out.println("C-SCAN" + distanceTraveled);
+      System.out.println("C-SCAN " + distanceTraveled);
       
    }
    
